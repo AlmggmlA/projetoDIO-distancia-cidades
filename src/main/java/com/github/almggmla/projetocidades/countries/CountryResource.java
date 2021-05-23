@@ -17,27 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/countries") //minha rota
 public class CountryResource {
 
-    //@Autowired ---> não precisaria criar o construtor, ele mesmo resolviria isso.
+    //@Autowired ---> não precisaria criar o construtor, ele mesmo resolveria isso.
     private CountryRepository repository;
 
     public CountryResource(CountryRepository repository) {
         this.repository = repository;
     }
 
-//    @GetMapping
-//    public List<Country> countries(){
-//        return repository.findAll();
-//    }
-
     @GetMapping
     public Page<Country> countries(Pageable page){
         return repository.findAll(page);
     }
 
-
-//    public Country getOne(@PathVariable Long id){
-//        Optional<Country> optional = repository.findById(id);
-//        return optional.get();
     @GetMapping("/{id}")
     public ResponseEntity getOne(@PathVariable Long id){
         Optional<Country> optional = repository.findById(id);
@@ -47,6 +38,5 @@ public class CountryResource {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 }
